@@ -5,14 +5,14 @@ test -r .env && source .env
 if [ -z "${SLACK_TOKEN}" ]; then echo "SLACK_TOKEN env var required!"; exit 1; fi
 if [ -z "${SLACK_USER_ID}" ]; then echo "SLACK_USER_ID env var required!"; exit 1; fi
 
+status_exp=$(( $(gdate +%s) + 3600 ))
+
 if [ "${1}" == "lunch" ]; then
   status_text="Lunch"
   status_emoji=":pizza:"
-  status_exp="3600"
 elif [ "${1}" == "workout" ]; then
   status_text="Workout"
   status_emoji=":weight_lifter:"
-  status_exp="3600"
 else
   echo "Usage: $0 [lunch|workout]"
   exit 1
