@@ -7,16 +7,24 @@ if [ -z "${SLACK_USER_ID}" ]; then echo "SLACK_USER_ID env var required!"; exit 
 
 status_exp=$(( $(gdate +%s) + 3600 ))
 
-if [ "${1}" == "lunch" ]; then
-  status_text="Lunch"
-  status_emoji=":pizza:"
-elif [ "${1}" == "workout" ]; then
-  status_text="Workout"
-  status_emoji=":weight_lifter:"
-else
-  echo "Usage: $0 [lunch|workout]"
-  exit 1
-fi
+case "${1}" in
+  lunch)
+    status_text="Lunch"
+    status_emoji=":pizza:"
+  ;;
+  workout)
+    status_text="Workout"
+    status_emoji=":weight_lifter:"
+  ;;
+  focus)
+    status_text="Focus time"
+    status_emoji=":headphones:"
+  ;;
+  *)
+    echo "Usage: $0 [lunch|workout|focus]"
+    exit 1
+  ;;
+esac
 
 body=$(echo '{
   "profile": {
