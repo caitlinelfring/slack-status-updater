@@ -5,7 +5,8 @@ test -r .env && source .env
 if [ -z "${SLACK_TOKEN}" ]; then echo "SLACK_TOKEN env var required!"; exit 1; fi
 if [ -z "${SLACK_USER_ID}" ]; then echo "SLACK_USER_ID env var required!"; exit 1; fi
 
-status_exp=$(( $(gdate +%s) + 3600 ))
+STATUS_EXP_MIN=${2:-60}
+status_exp=$(( $(gdate +%s) + $(( ${STATUS_EXP_MIN} * 60 )) ))
 
 case "${1}" in
   lunch)
@@ -21,7 +22,7 @@ case "${1}" in
     status_emoji=":headphones:"
   ;;
   *)
-    echo "Usage: $0 [lunch|workout|focus]"
+    echo "Usage: $0 [lunch|workout|focus] [minutes status active (default 60)]"
     exit 1
   ;;
 esac
