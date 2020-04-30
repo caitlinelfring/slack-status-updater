@@ -27,7 +27,7 @@ body=$(echo '{
 }' | jq -r '.')
 
 curl -s -X POST \
-  -H "Content-type: application/json" \
+  -H "Content-type: application/json; charset=utf-8" \
   -H "Authorization: Bearer ${SLACK_TOKEN}" \
   -H "X-Slack-User: ${SLACK_USER_ID}" \
   -d "${body}" \
