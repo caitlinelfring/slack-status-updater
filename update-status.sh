@@ -9,12 +9,26 @@ test -r .env && . "${CMD_DIR}/.env"
 if [ -z "${SLACK_TOKEN}" ]; then echo "SLACK_TOKEN env var required!"; exit 1; fi
 if [ -z "${SLACK_USER_ID}" ]; then echo "SLACK_USER_ID env var required!"; exit 1; fi
 
-STATUS_EXP_MIN=${2:-60}
-status_exp=$(( $(gdate +%s) + $(( STATUS_EXP_MIN * 60 )) ))
+DND_ENABLED="false"
+STATUS_EXP_MIN=60
 
-DND_ENABLED=false
+function usage {
+    echo "Usage: $0 [lunch|workout|focus] -m 60 (optional, minutes status active) -d (optional, if supplied, enabled Do Not Disturb)"
+    echo "       $0 clear"
+    exit 1
+}
+STATUS="${1}"
+shift
+while getopts ':m:d' options; do
+  case $options in
+    m)    STATUS_EXP_MIN="${OPTARG}";;
+    d)    DND_ENABLED="true";;
+    ?)    usage;;
+  esac
+done
+shift $((OPTIND - 1))
 
-case "${1}" in
+case "${STATUS}" in
   clear)
     status_text=""
     status_emoji=""
@@ -33,11 +47,11 @@ case "${1}" in
     DND_ENABLED=true
   ;;
   *)
-    echo "Usage: $0 [lunch|workout|focus] [minutes status active (default 60)]"
-    echo "       $0 clear"
-    exit 1
+    usage
   ;;
 esac
+
+status_exp=$(( $(gdate +%s) + $(( STATUS_EXP_MIN * 60 )) ))
 
 body=$(echo '{
   "profile": {
