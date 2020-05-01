@@ -1,6 +1,10 @@
 #!/bin/bash
 
-test -r .env && source .env
+CMD_LINK=$(readlink "${BASH_SOURCE[0]}")
+CMD_DIR="$( cd "$(dirname "${CMD_LINK}")" >/dev/null 2>&1 && pwd )"
+
+# shellcheck source=/dev/null
+test -r .env && . "${CMD_DIR}/.env"
 
 if [ -z "${SLACK_TOKEN}" ]; then echo "SLACK_TOKEN env var required!"; exit 1; fi
 if [ -z "${SLACK_USER_ID}" ]; then echo "SLACK_USER_ID env var required!"; exit 1; fi
