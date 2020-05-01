@@ -11,6 +11,10 @@ status_exp=$(( $(gdate +%s) + $(( STATUS_EXP_MIN * 60 )) ))
 DND_ENABLED=false
 
 case "${1}" in
+  clear)
+    status_text=""
+    status_emoji=""
+  ;;
   lunch)
     status_text="Lunch"
     status_emoji=":pizza:"
@@ -26,6 +30,7 @@ case "${1}" in
   ;;
   *)
     echo "Usage: $0 [lunch|workout|focus] [minutes status active (default 60)]"
+    echo "       $0 clear"
     exit 1
   ;;
 esac
