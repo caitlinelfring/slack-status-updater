@@ -36,3 +36,9 @@ export SLACK_USER_ID="UXXX1234"
 # Set status for 90 minutes, enjoy life, while on Do Not Disturb mode
 ./slack-status-update lunch -m 90 -d
 ```
+
+## Configure to run from anywhere
+
+```bash
+sudo ln -s $(pwd)/slack-status-update /usr/local/bin
+```
