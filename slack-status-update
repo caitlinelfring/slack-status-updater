@@ -1,4 +1,14 @@
-#!/bin/bash
+#!/bin/bash -e
+
+if [ "$(uname -a)" == "Darwin" ]; then
+  if ! command -v gdate >/dev/null; then
+    echo "gdate required, install via 'brew install coreutils'"
+    exit 1
+  fi
+  _date=gdate
+else
+  _date=date
+fi
 
 CMD_LINK=$(readlink "${BASH_SOURCE[0]}")
 CMD_DIR="$( cd "$(dirname "${CMD_LINK}")" >/dev/null 2>&1 && pwd )"
@@ -51,7 +61,7 @@ case "${STATUS}" in
   ;;
 esac
 
-status_exp=$(( $(gdate +%s) + $(( STATUS_EXP_MIN * 60 )) ))
+status_exp=$(( $($_date +%s) + $(( STATUS_EXP_MIN * 60 )) ))
 
 body=$(echo '{
   "profile": {
