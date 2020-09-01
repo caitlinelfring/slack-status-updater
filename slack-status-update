@@ -27,6 +27,12 @@ function usage {
     echo "       $0 clear"
     exit 1
 }
+
+function rand_food {
+    food=(":pizza:" ":hamburger:" ":taco:" ":sandwich:" ":burrito:")
+    echo "${food[$RANDOM % ${#food[@]}]}"
+}
+
 STATUS="${1}"
 shift
 while getopts ':m:d' options; do
@@ -45,7 +51,7 @@ case "${STATUS}" in
   ;;
   lunch)
     status_text="Lunch"
-    status_emoji=":pizza:"
+    status_emoji="$(rand_food)"
   ;;
   workout)
     status_text="Workout"
