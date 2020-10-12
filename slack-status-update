@@ -23,7 +23,7 @@ DND_ENABLED="false"
 STATUS_EXP_MIN=60
 
 function usage {
-    echo "Usage: $0 [lunch|workout|focus] -m 60 (optional, minutes status active) -d (optional, if supplied, enabled Do Not Disturb)"
+    echo "Usage: $0 [lunch|workout|focus|meeting] -m 60 (optional, minutes status active) -d (optional, if supplied, enabled Do Not Disturb)"
     echo "       $0 clear"
     exit 1
 }
@@ -61,6 +61,10 @@ case "${STATUS}" in
     status_text="Focus time"
     status_emoji=":headphones:"
     DND_ENABLED=true
+  ;;
+  meeting)
+    status_text="Meeting"
+    status_emoji=":calendar:"
   ;;
   *)
     usage
