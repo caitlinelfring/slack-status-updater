@@ -34,6 +34,8 @@ function rand_food {
 }
 
 STATUS="${1}"
+if [ -z "${STATUS}" ]; then usage; fi
+
 shift
 while getopts ':m:d' options; do
   case $options in
