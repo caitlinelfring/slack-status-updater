@@ -29,7 +29,7 @@ function usage {
 }
 
 function rand_food {
-    food=(":pizza:" ":hamburger:" ":taco:" ":sandwich:" ":burrito:")
+    food=(":pizza:" ":hamburger:" ":green_salad:" ":sandwich:" ":burrito:")
     echo "${food[$RANDOM % ${#food[@]}]}"
 }
 
